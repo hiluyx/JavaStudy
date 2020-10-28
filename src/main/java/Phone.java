@@ -12,19 +12,17 @@ public class Phone {
     private Gyro gyro = new Gyro();
 
     /**
-     * 向垂直方向倾斜手机
-     * @param degree 调整度数
+     *
+     * @param type 0-x, 1-y, 2-z
+     * @param degree 倾斜角度
      */
-    public void tilt2Vertical(double degree) {
-        gyro.setVerticalTilt(gyro.getVerticalTilt()+degree);
-    }
-
-    /**
-     * 向水平方向倾斜手机
-     * @param degree 调整度数
-     */
-    public void tilt2Horizontal(double degree) {
-        gyro.setHorizontalTilt(gyro.getHorizontalTilt()+degree);
+    public void tilt(int type, double degree) throws Exception {
+        switch (type) {
+            case 0: gyro.setXInclination(gyro.getXInclination()+degree);
+            case 1: gyro.setYInclination(gyro.getYInclination()+degree);
+            case 2: gyro.setZInclination(gyro.getZInclination()+degree);
+            default: throw new Exception("type error???");
+        }
     }
 
     /**
@@ -61,19 +59,11 @@ public class Phone {
      */
     @Data
     static class Gyro {
-        /*
-        垂直倾斜度：
-          零 说明手机面垂直雷达面；
-        负数 说明手机的上部分向使用者倾斜；
-        正数 说明手机的下部分向使用者倾斜。
-         */
-        double verticalTilt = 0;
-        /*
-        水平倾斜度：
-          零 说明手机中线垂直于雷达面；
-        负数 说明手机的中线向左侧倾斜；
-        正数 说明手机的中线向右侧倾斜。
-         */
-        double horizontalTilt = 0;
+        //x 倾角
+        double xInclination;
+        //y 倾角
+        double yInclination;
+        //z 倾角
+        double zInclination;
     }
 }

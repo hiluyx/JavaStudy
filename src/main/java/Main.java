@@ -10,6 +10,7 @@ public class Main {
         destination.setLatitude(23.441);
 
         System.out.println(myPoint.distance2Another(destination));
+
     }
 
     /**
