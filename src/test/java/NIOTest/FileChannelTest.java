@@ -12,15 +12,15 @@ import java.nio.file.StandardOpenOption;
 import java.util.Objects;
 
 public class FileChannelTest {
-    @Test
-    public void test() throws IOException, URISyntaxException {
-        FileChannel fileChannel = FileChannel.open(
-               Path.of(this.getClass().getResource("1.txt").toURI()),
-                StandardOpenOption.READ);
-        ByteBuffer buffer = ByteBuffer.allocate(1024);
-        fileChannel.read(buffer);
-        System.out.println(new String(buffer.array(), StandardCharsets.UTF_8));
-    }
+//    @Test
+//    public void test() throws IOException, URISyntaxException {
+//        FileChannel fileChannel = FileChannel.open(
+//               Path.of(this.getClass().getResource("1.txt").toURI()),
+//                StandardOpenOption.READ);
+//        ByteBuffer buffer = ByteBuffer.allocate(1024);
+//        fileChannel.read(buffer);
+//        System.out.println(new String(buffer.array(), StandardCharsets.UTF_8));
+//    }
     @Test
     public void classPathTest(){
         System.out.println("==================Class.getClassLoader.getResource=============");
