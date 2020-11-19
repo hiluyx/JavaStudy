@@ -15,7 +15,7 @@ public class FutureTest {
                 return 100;
             }
         });
-        Thread t1 = new Thread(task,"t1");
+        Thread t1 = new Thread(task, "t1");
         t1.start();
         System.out.println(task.get());
     }

@@ -34,6 +34,7 @@ public class DatagramChannelTest {
             }
         }
     }
+
     public static void sendReback(SocketAddress socketAddress, DatagramChannel datagramChannel) throws IOException {
         String message = "I has receive your message";
         ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -41,6 +42,7 @@ public class DatagramChannelTest {
         buffer.flip();
         datagramChannel.send(buffer, socketAddress);
     }
+
     @Test
     public void client() throws IOException, InterruptedException {
         final DatagramChannel channel = DatagramChannel.open();
@@ -79,6 +81,7 @@ public class DatagramChannelTest {
             Thread.sleep(2000);
         }
     }
+
     public static void sendMessage(DatagramChannel channel, String mes) throws IOException {
         if (mes == null || mes.isEmpty()) {
             return;

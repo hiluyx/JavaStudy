@@ -12,7 +12,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.Objects;
 
 public class FileChannelTest {
-//    @Test
+    //    @Test
 //    public void test() throws IOException, URISyntaxException {
 //        FileChannel fileChannel = FileChannel.open(
 //               Path.of(this.getClass().getResource("1.txt").toURI()),
@@ -22,7 +22,7 @@ public class FileChannelTest {
 //        System.out.println(new String(buffer.array(), StandardCharsets.UTF_8));
 //    }
     @Test
-    public void classPathTest(){
+    public void classPathTest() {
         System.out.println("==================Class.getClassLoader.getResource=============");
         System.out.println(this.getClass().getClassLoader().getResource(""));
         System.out.println(this.getClass().getClassLoader().getResource("1.txt"));

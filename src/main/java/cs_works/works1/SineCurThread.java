@@ -1,8 +1,8 @@
-package works1;
+package cs_works.works1;
 
 import lombok.SneakyThrows;
 
-public class SineCurThread implements Runnable{
+public class SineCurThread implements Runnable {
 
     final double SPLIT = 0.01;// 角度的分割
     final int COUNT = (int) (2 / SPLIT);// 2PI分割的次数，也就是2/0.01个，正好是一周

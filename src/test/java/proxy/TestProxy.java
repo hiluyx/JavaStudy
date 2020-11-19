@@ -11,9 +11,10 @@ public class TestProxy {
     @Test
     public void testJdkProxy() {
         JdkProxyExample jdk = new JdkProxyExample();
-        HelloWorld proxy = (HelloWorld)jdk.bind(new HelloWorldImpl());
+        HelloWorld proxy = (HelloWorld) jdk.bind(new HelloWorldImpl());
         proxy.sayHello("john");
     }
+
     @Test
     public void testCglibProxy() {
         CglibProxyExample cpe = new CglibProxyExample();
