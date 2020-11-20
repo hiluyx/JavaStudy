@@ -60,10 +60,6 @@ public class SpaceBuilder {
         space.setNumDivBlocks(numDivBlocks);
         return this;
     }
-    public SpaceBuilder setSpaceBase(int cellBase) {
-        space.setSpaceBase(cellBase);
-        return this;
-    }
 
     public SpaceBuilder setDataFile(String path){
         file = new File(path);
@@ -82,6 +78,7 @@ public class SpaceBuilder {
 
     public SpaceBuilder setCellSpace(int[][] cellSpace, List<Cell> data) {
         space.setCellSpace(cellSpace);
+        space.setSpaceBase(cellSpace.length);
         for (Cell cell:data) {
             space.getCellSpace()[cell.getX()][cell.getY()] = 1;
         }

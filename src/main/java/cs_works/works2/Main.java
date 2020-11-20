@@ -21,21 +21,23 @@ public class Main {
         String path = (Space.class.getClassLoader().getResource("") + "in_1000.txt").substring(6);
         File file = new File(path);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-
+        // 初始化读取数据
         int spaceBase = Integer.parseInt(Objects.requireNonNull(bufferedReader.readLine()));
         int evolutionAlg = Integer.parseInt(Objects.requireNonNull(bufferedReader.readLine()));
         List<Cell> listCell = SpaceBuilder.getDataSet(bufferedReader);
         int[][] cellSpace = new int[spaceBase][spaceBase];
+        // 建造space
         SpaceBuilder spaceBuilder = new SpaceBuilder();
         Space space = spaceBuilder.setDataFile(
                 (Space.class.getClassLoader().getResource("") + "output.txt").substring(6))
-                .setSpaceBase(spaceBase)
-                .setCellSpace(cellSpace,listCell)
-                .setEvolutionAlg(evolutionAlg)
-                .setNumDivBlocks(8)
-                .setQueueSize(100)
+                .setCellSpace(cellSpace,listCell) // 棋盘
+                .setEvolutionAlg(evolutionAlg) // 进化代数
+                .setNumDivBlocks(8) // 数据划分
+                .setQueueSize(100) // 缓冲队列
                 .build();
+        // 开始模拟
         space.evolve();
+        // 数据保存
         spaceBuilder.output2File();
     }
 }

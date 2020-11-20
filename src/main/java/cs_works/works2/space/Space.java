@@ -78,8 +78,7 @@ public class Space {
             while (true) { // consumer不断消化cellQueue的任务
                 if (isDone) {
                     if (queue.isEmpty()) {
-                        cLogger.info("CellHandler-{} done.",
-                                serialNum);
+                        cLogger.info("CellHandler-{} done.", serialNum);
                         if (atomicInt.incrementAndGet() == numDivBlocks) {
                             synchronized (lock) {
                                 atomicInt.set(0);
@@ -95,10 +94,7 @@ public class Space {
                 }
                 int _x = cell.getX();
                 int _y = cell.getY();
-                int cellResult = evolveCell(
-                        _x,_y,
-                        x_lEdge,x_rEdge,
-                        y_tEdge,y_bEdge);
+                int cellResult = evolveCell(_x,_y, x_lEdge,x_rEdge, y_tEdge,y_bEdge);
                 temp[_x][_y] = cellResult;
             }
         }
