@@ -53,11 +53,7 @@ public class Space {
         public CellsHandler(int numBlocks) {
             this.serialNum = numBlocks;
             x_lEdge = numBlocks * numPerDiv;
-            x_rEdge = (numBlocks == numDivBlocks - 1) ? (
-                    spaceBase - 1
-                    ) : (
-                            (numBlocks + 1) *numPerDiv - 1
-                    );
+            x_rEdge = (numBlocks == numDivBlocks - 1) ? (spaceBase - 1) : ((numBlocks + 1) *numPerDiv - 1);
             y_tEdge = 0;
             y_bEdge = spaceBase - 1;
         }
@@ -76,17 +72,15 @@ public class Space {
             });
 
             while (true) { // consumer不断消化cellQueue的任务
-                if (isDone) {
-                    if (queue.isEmpty()) {
-                        cLogger.info("CellHandler-{} done.", serialNum);
-                        if (atomicInt.incrementAndGet() == numDivBlocks) {
-                            synchronized (lock) {
-                                atomicInt.set(0);
-                                lock.notifyAll();
-                            }
+                if (isDone && queue.isEmpty()) {
+                    cLogger.info("CellHandler-{} done.", serialNum);
+                    if (atomicInt.incrementAndGet() == numDivBlocks) {
+                        synchronized (lock) {
+                            atomicInt.set(0);
+                            lock.notifyAll();
                         }
-                        break;
                     }
+                    break;
                 }
                 Cell cell = queue.consume();
                 if (cell == null) {
