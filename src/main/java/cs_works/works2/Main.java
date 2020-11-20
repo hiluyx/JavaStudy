@@ -32,8 +32,8 @@ public class Main {
                 (Space.class.getClassLoader().getResource("") + "output.txt").substring(6))
                 .setCellSpace(cellSpace,listCell) // 棋盘
                 .setEvolutionAlg(evolutionAlg) // 进化代数
-                .setNumDivBlocks(8) // 数据划分
-                .setQueueSize(100) // 缓冲队列
+                .setNumDivBlocks(2) // 数据划分
+                .setQueueSize(1000) // 缓冲队列
                 .build();
         // 开始模拟
         space.evolve();

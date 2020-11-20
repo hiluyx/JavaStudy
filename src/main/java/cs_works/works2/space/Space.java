@@ -62,13 +62,20 @@ public class Space {
         @Override
         public void run() {
             EvolveWorkPool.execute(()->{ // 不断扫描子棋盘，生产cell进入cellQueue
-                cLogger.info("CellHandler-{} start.{}",serialNum,this.toString());
-                for (int i = x_lEdge; i <= x_rEdge; i ++) {
-                    for (int j = y_tEdge; j <= y_bEdge; j ++) {
-                        while (! queue.add(new Cell(i, j, cellSpace[i][j])));
+                try {
+                    cLogger.info("CellHandler-{} start.{}",serialNum,this.toString());
+                    for (int i = x_lEdge; i <= x_rEdge; i ++) {
+                        for (int j = y_tEdge; j <= y_bEdge; j ++) {
+                            while (! queue.add(new Cell(i, j, cellSpace[i][j]))) {
+                                //System.err.println("add null");
+                                //Thread.sleep(1);
+                            }
+                        }
                     }
+                    isDone = true;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                isDone = true;
             });
 
             while (true) { // consumer不断消化cellQueue的任务
@@ -84,6 +91,12 @@ public class Space {
                 }
                 Cell cell = queue.consume();
                 if (cell == null) {
+                    //System.out.println("consume null");
+//                    try {
+//                        Thread.sleep(1);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
                     continue;
                 }
                 int _x = cell.getX();
@@ -125,6 +138,7 @@ public class Space {
      * 生命历程
      */
     public void evolve() throws InterruptedException {
+        long sT = System.currentTimeMillis();
         this.temp = new int[spaceBase][spaceBase];
         for (int i = 1; i <= evolutionAlg; i ++) {
             logger.info("evolutionAlg-{}",i);
@@ -139,6 +153,8 @@ public class Space {
             }
             //display(cellSpace);
         }
+        long eT = System.currentTimeMillis() - sT;
+        logger.info("total time: {}",eT);
     }
 
     /**

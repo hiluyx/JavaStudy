@@ -26,6 +26,7 @@ public class CellQueue {
     }
 
     public boolean add(Cell cell) {
+        //if ((head +1) % BUFFER_SIZE == tail) return false;
         lock.lock();
         try {
             //System.out.println("adder gain lock.");
