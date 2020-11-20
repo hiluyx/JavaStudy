@@ -27,7 +27,7 @@ public class SpaceBuilder {
             }
             int x = Integer.parseInt(xy[0]);
             int y = Integer.parseInt(xy[1]);
-            logger.info("get data: {},{}",x,y);
+            //logger.info("get data: {},{}",x,y);
             listCell.add(new Cell(x, y, 1));
         } while (true);
         return listCell;

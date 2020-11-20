@@ -90,7 +90,9 @@ public class Space {
                     }
                 }
                 Cell cell = queue.consume();
-                if (cell == null) continue;
+                if (cell == null) {
+                    continue;
+                }
                 int _x = cell.getX();
                 int _y = cell.getY();
                 int cellResult = evolveCell(

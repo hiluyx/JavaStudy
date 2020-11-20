@@ -32,7 +32,7 @@ public class Main {
                 .setSpaceBase(spaceBase)
                 .setCellSpace(cellSpace,listCell)
                 .setEvolutionAlg(evolutionAlg)
-                .setNumDivBlocks(20)
+                .setNumDivBlocks(8)
                 .setQueueSize(100)
                 .build();
         space.evolve();
