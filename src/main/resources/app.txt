@@ -1,0 +1,3 @@
+       CodeScanner scanner = new CodeScanner(tempChars);//  呃呃呃呃
+        Word word = scanner.scan();/*
+        为谔谔*/

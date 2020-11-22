@@ -68,7 +68,7 @@ public class Space {
                         for (int j = y_tEdge; j <= y_bEdge; j ++) {
                             while (! queue.add(new Cell(i, j, cellSpace[i][j]))) {
                                 //System.err.println("add null");
-                                //Thread.sleep(1);
+                                //Thread.sleep(1);w
                             }
                         }
                     }
