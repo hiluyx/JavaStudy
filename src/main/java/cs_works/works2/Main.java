@@ -18,7 +18,7 @@ import java.util.*;
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) throws Exception {
-        String path = (Space.class.getClassLoader().getResource("") + "in_1000.txt").substring(6);
+        String path = (Space.class.getClassLoader().getResource("") + "cs_works_data/in_1000.txt").substring(6);
         File file = new File(path);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         // 初始化读取数据
@@ -32,8 +32,8 @@ public class Main {
                 (Space.class.getClassLoader().getResource("") + "output.txt").substring(6))
                 .setCellSpace(cellSpace,listCell) // 棋盘
                 .setEvolutionAlg(evolutionAlg) // 进化代数
-                .setNumDivBlocks(2) // 数据划分
-                .setQueueSize(1000) // 缓冲队列
+                .setNumDivBlocks(4) // 数据划分
+                .setQueueSize(100000) // 缓冲队列
                 .build();
         // 开始模拟
         space.evolve();

@@ -1,0 +1,51 @@
+TID I1 I2 I3 I4 I5 I6
+1 Cardiacfailure Myocardialinfarction Other
+2 Cardiacfailure
+3 Cardiacfailure uremia Myocardialinfarction
+4 Renalfailure Cardiacfailure diabetes uremia
+5 uremia Cardiacfailure Renalfailure diabetes
+6 diabetes
+7 diabetes Cardiacfailure Myocardialinfarction Other
+8 diabetes uremia
+9 diabetes
+10 Renalfailure diabetes uremia
+11 diabetes
+12 Cardiacfailure diabetes uremia Renalfailure
+13 uremia diabetes Renalfailure Cardiacfailure
+14 Renalfailure
+15 Other Renalfailure
+16 Renalfailure diabetes
+17 Myocardialinfarction Cardiacfailure
+18 uremia Renalfailure
+19 Renalfailure
+20 uremia diabetes Renalfailure
+21 uremia Renalfailure
+22 uremia
+23 Cardiacfailure uremia Renalfailure diabetes Myocardialinfarction
+24 Renalfailure diabetes uremia Cardiacfailure
+25 Myocardialinfarction Cardiacfailure Other
+26 diabetes Renalfailure uremia Cardiacfailure
+27 uremia Renalfailure diabetes Cardiacfailure Myocardialinfarction
+28 uremia diabetes Renalfailure Myocardialinfarction
+29 diabetes uremia
+30 Myocardialinfarction
+31 diabetes Renalfailure uremia Cardiacfailure
+32 Cardiacfailure diabetes Other
+33 Renalfailure diabetes
+34 uremia diabetes Renalfailure
+35 Myocardialinfarction Cardiacfailure
+36 uremia Renalfailure
+37 Other Renalfailure Myocardialinfarction
+38 Renalfailure diabetes uremia
+39 Cardiacfailure Myocardialinfarction Other
+40 Myocardialinfarction Other
+41 uremia Renalfailure diabetes
+42 Cardiacfailure diabetes uremia Renalfailure
+43 Myocardialinfarction
+44 diabetes uremia Renalfailure
+45 Myocardialinfarction Renalfailure
+46 Cardiacfailure Myocardialinfarction
+47 diabetes
+48 Myocardialinfarction Cardiacfailure
+49 diabetes Renalfailure uremia
+50 Renalfailure

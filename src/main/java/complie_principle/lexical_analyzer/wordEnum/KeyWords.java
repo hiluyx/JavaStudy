@@ -1,4 +1,4 @@
-package complie_principle.lexical_analyzer;
+package complie_principle.lexical_analyzer.wordEnum;
 
 
 public enum KeyWords {
@@ -8,7 +8,12 @@ public enum KeyWords {
     THEN(3,"then"),
     WHILE(4,"while"),
     DO(5,"do"),
-    END(6,"end");
+    END(6,"end"),
+    FOR(7,"for"),
+    ELSE(8,"else"),
+    SWITCH(9,"switch"),
+    CASE(10,"case"),
+    RET(11,"return");
 
     private final int syn;
     private final String token;

@@ -1,5 +1,9 @@
 package complie_principle.lexical_analyzer;
 
+import complie_principle.lexical_analyzer.wordEnum.KeyWords;
+import complie_principle.lexical_analyzer.wordEnum.Symbol;
+import complie_principle.lexical_analyzer.wordEnum.Word;
+
 /**
  * 代码分析器
  * codes 代码缓冲区
@@ -8,7 +12,7 @@ package complie_principle.lexical_analyzer;
 public class CodeScanner {
 
     private final char[] codes;
-    private final char[] token = new char[255];
+    private char[] token = new char[255];
     private int p_input = 0;
     private int p_token = 0;
 
@@ -19,6 +23,7 @@ public class CodeScanner {
     }
 
     public Word scan() {
+        token = new char[255];
         p_token = 0;
         m_get_ch();
         get_bc();
@@ -39,7 +44,7 @@ public class CodeScanner {
                 m_get_ch();
             }
             retract();
-            return new Word(11,String.copyValueOf(token));
+            return new Word(21,String.copyValueOf(token));
         } else {
             //System.out.println("----not digit or letter");
             if (ch == '=' || ch == '>' || ch == '<' || ch == '!' || ch == '+' || ch == '-' || ch == '*') { // 可能的双符号拼接
@@ -79,10 +84,11 @@ public class CodeScanner {
             }else { // 单符号
                 //System.out.println("    ----single symbol");
                 if ((int)ch == 0) {
-                    System.out.println("文件结束");
-                    return new Word(-1,"end");
+                    return new Word(0,"code end");
                 }
-                return new Word(Symbol.getSymbol(String.valueOf(ch)));
+                Symbol symbol = Symbol.getSymbol(String.valueOf(ch));
+                if (symbol == null) return new Word(-1,String.valueOf(ch));
+                return new Word(symbol);
             }
         }
     }
@@ -93,6 +99,7 @@ public class CodeScanner {
         m_get_ch();
         if (ch == '=') { // 双符号拼接
             str[1] = '=';
+            return new Word(Symbol.getSymbol(String.valueOf(str)));
         }
         // 单符号
         retract();
@@ -118,7 +125,7 @@ public class CodeScanner {
     }
 
     private boolean letter() {
-        return ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z';
+        return ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_';
     }
 
     private boolean digit() {
@@ -127,11 +134,12 @@ public class CodeScanner {
 
     private int reserve() {
         for (KeyWords k : KeyWords.values()) {
-            if (k.getToken().equals(String.copyValueOf(token))) {
+            // System.out.println(String.valueOf(token)+","+k.getToken()+","+k.getSyn());
+            if (k.getToken().equals(String.valueOf(token).trim())) {
                 return k.getSyn();
             }
         }
-        return 10;
+        return 20;
     }
 
     private void retract() {

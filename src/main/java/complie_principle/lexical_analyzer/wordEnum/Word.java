@@ -1,4 +1,4 @@
-package complie_principle.lexical_analyzer;
+package complie_principle.lexical_analyzer.wordEnum;
 
 import lombok.Data;
 
