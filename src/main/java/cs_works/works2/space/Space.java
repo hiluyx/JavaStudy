@@ -1,6 +1,6 @@
 package cs_works.works2.space;
 
-import cs_works.works2.taskPool.EvolveWorkPool;
+import cs_works.taskPool.EvolveWorkPool;
 import cs_works.works2.taskQueue.CellQueue;
 import lombok.Data;
 import lombok.Setter;

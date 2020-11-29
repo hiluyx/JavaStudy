@@ -1,4 +1,4 @@
-package cs_works.works2.taskPool;
+package cs_works.taskPool;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
