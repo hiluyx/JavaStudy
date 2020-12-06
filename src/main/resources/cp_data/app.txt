@@ -1,5 +1,5 @@
 int main() {
-    int i = 0;
+    double i = 1.55;
     while (i != 9) {
         i ++;
     }

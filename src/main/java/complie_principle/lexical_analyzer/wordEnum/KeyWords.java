@@ -13,7 +13,9 @@ public enum KeyWords {
     ELSE(8,"else"),
     SWITCH(9,"switch"),
     CASE(10,"case"),
-    RET(11,"return");
+    RET(11,"return"),
+    INT(12,"int"),
+    DOUBLE(13,"double");
 
     private final int syn;
     private final String token;

@@ -11,18 +11,28 @@ import complie_principle.lexical_analyzer.wordEnum.Word;
  */
 public class CodeScanner {
 
+    private static CodeScanner c;
+
     private final char[] codes;
-    private char[] token = new char[255];
+    private static char[] token = new char[255];
     private int p_input = 0;
     private int p_token = 0;
 
     private char ch;
 
-    public CodeScanner(char[] codes) {
+    public synchronized static CodeScanner getInstance(char[] codes) {
+        if (c == null){
+            c = new CodeScanner(codes);
+        }
+        return c;
+    }
+
+    private CodeScanner(char[] codes) {
         this.codes = codes;
     }
 
     public Word scan() {
+        if (codes == null) return null;
         token = new char[255];
         p_token = 0;
         m_get_ch();
@@ -37,14 +47,26 @@ public class CodeScanner {
             retract();
             return new Word(reserve(),String.copyValueOf(token));
         } else if (digit()) {
+            int retType = 21;
             //System.out.println("----digit");
             while (digit()) {
                 //System.out.print("  +"+ch+", ");
                 concat();
                 m_get_ch();
+                if (ch == '.') {
+                    // 返回22浮点数
+                    retType = 22;
+                    concat();
+                    m_get_ch();
+                    if (!digit()) {
+                        token[p_token] = '0';
+                        p_token ++;
+                        break;
+                    }
+                }
             }
             retract();
-            return new Word(21,String.copyValueOf(token));
+            return new Word(retType,String.copyValueOf(token));
         } else {
             //System.out.println("----not digit or letter");
             if (ch == '=' || ch == '>' || ch == '<' || ch == '!' || ch == '+' || ch == '-' || ch == '*') { // 可能的双符号拼接
@@ -108,6 +130,7 @@ public class CodeScanner {
 
     private void m_get_ch() {
         ch = codes[p_input];
+        // System.out.println("ch: " + (int) ch);
         p_input ++;
     }
 
