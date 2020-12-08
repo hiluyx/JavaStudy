@@ -69,7 +69,7 @@ public class CodeScanner {
             return new Word(retType,String.copyValueOf(token));
         } else {
             //System.out.println("----not digit or letter");
-            if (ch == '=' || ch == '>' || ch == '<' || ch == '!' || ch == '+' || ch == '-' || ch == '*') { // 可能的双符号拼接
+            if (ch == '=' || ch == '>' || ch == '<' || ch == '!' || ch == '+' || ch == '-' || ch == '*' || ch == ':') { // 可能的双符号拼接
                 //System.out.println("    ----StitchSymbol");
                 return getStitchSymbol();
             }else if (ch == '/') { // 可能出现注释

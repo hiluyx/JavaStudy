@@ -21,6 +21,8 @@ public class LStarter {
             word = scanner.scan();
             if (word.getTypeNum() == -1) {
                 throw new WordException("Illegal word: "+word.getWord());
+            } else if (word.getTypeNum() == 0) {
+                System.out.println(word.getWord() + " :文件分析结束。");
             }
         }
         System.out.println("文件分析结束。");

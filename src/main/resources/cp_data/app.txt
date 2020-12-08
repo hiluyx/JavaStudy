@@ -1,7 +1,8 @@
-int main() {
-    double i = 1.55;
-    while (i != 9) {
-        i ++;
-    }
-    return 0;
-}
+begin
+a:=9;
+b:=a+x; // 77
+d*****
+b:=a+x; // 77
+d*****
+end
+#

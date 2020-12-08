@@ -2,6 +2,7 @@ package complie_principle.lexical_analyzer.wordEnum;
 
 public enum Symbol {
 
+    CODE_END(0,"#"),
     ADD(40,"+"),
     SUB(41,"-"),
     MUL(42,"*"),

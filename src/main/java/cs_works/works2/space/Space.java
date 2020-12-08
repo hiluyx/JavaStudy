@@ -61,49 +61,47 @@ public class Space {
         @SneakyThrows
         @Override
         public void run() {
-            EvolveWorkPool.execute(()->{ // 不断扫描子棋盘，生产cell进入cellQueue
+            //EvolveWorkPool.execute(()->{ // 不断扫描子棋盘，生产cell进入cellQueue
                 try {
                     cLogger.info("CellHandler-{} start.{}",serialNum,this.toString());
                     for (int i = x_lEdge; i <= x_rEdge; i ++) {
                         for (int j = y_tEdge; j <= y_bEdge; j ++) {
-                            while (! queue.add(new Cell(i, j, cellSpace[i][j]))) {
-                                //System.err.println("add null");
-                                //Thread.sleep(1);w
-                            }
+                            //while (! queue.add(new Cell(i, j, cellSpace[i][j])));
+                            temp[i][j] = evolveCell(i,j,x_lEdge,x_rEdge, y_tEdge,y_bEdge);
                         }
                     }
-                    isDone = true;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-
-            while (true) { // consumer不断消化cellQueue的任务
-                if (isDone && queue.isEmpty()) {
-                    cLogger.info("CellHandler-{} done.", serialNum);
                     if (atomicInt.incrementAndGet() == numDivBlocks) {
                         synchronized (lock) {
                             atomicInt.set(0);
                             lock.notifyAll();
                         }
                     }
-                    break;
+                    isDone = true;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                Cell cell = queue.consume();
-                if (cell == null) {
-                    //System.out.println("consume null");
-//                    try {
-//                        Thread.sleep(1);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
+            //});
+
+//            while (true) { // consumer不断消化cellQueue的任务
+//                if (isDone && queue.isEmpty()) {
+//                    cLogger.info("CellHandler-{} done.", serialNum);
+//                    if (atomicInt.incrementAndGet() == numDivBlocks) {
+//                        synchronized (lock) {
+//                            atomicInt.set(0);
+//                            lock.notifyAll();
+//                        }
 //                    }
-                    continue;
-                }
-                int _x = cell.getX();
-                int _y = cell.getY();
-                int cellResult = evolveCell(_x,_y, x_lEdge,x_rEdge, y_tEdge,y_bEdge);
-                temp[_x][_y] = cellResult;
-            }
+//                    break;
+//                }
+//                Cell cell = queue.consume();
+//                if (cell == null) {
+//                    continue;
+//                }
+//                int _x = cell.getX();
+//                int _y = cell.getY();
+//                int cellResult = evolveCell(_x,_y, x_lEdge,x_rEdge, y_tEdge,y_bEdge);
+//                temp[_x][_y] = cellResult;
+//            }
         }
         /**
          * 进化一个cell
@@ -154,7 +152,7 @@ public class Space {
             //display(cellSpace);
         }
         long eT = System.currentTimeMillis() - sT;
-        logger.info("total time: {}",eT);
+        logger.info("total time: {}",eT/1000.0 +"s");
     }
 
     /**
