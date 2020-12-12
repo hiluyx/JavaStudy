@@ -96,6 +96,8 @@ public class CodeScanner {
                 } else { // 不是注释，而是/=，进行双符号拼接
                     //System.out.println("        ----StitchSymbol");
                     retract();
+                    retract();
+                    m_get_ch();
                     return getStitchSymbol();
                 }
                 return scan();

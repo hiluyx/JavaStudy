@@ -1,14 +1,15 @@
 package complie_principle.grammar_analyzer;
 
 import complie_principle.lexical_analyzer.CodeScanner;
+import complie_principle.lexical_analyzer.wordEnum.Word;
 
 /**
  * 递归下降分析程序
  */
 public class LRParser {
+    static int errorNum = 0;
     static int lineNum = 1;
     public static int syn = 1;
-    static int kk;
     private final CodeScanner codeScanner;
     public LRParser(CodeScanner codeScanner) {
         this.codeScanner = codeScanner;
@@ -16,54 +17,64 @@ public class LRParser {
 
     void lrParser() {
         syn = codeScanner.scan().getTypeNum();
-        if (syn == 1) {
-            syn = codeScanner.scan().getTypeNum();
-            yucu();
-            if (syn == 6) {
-                syn = codeScanner.scan().getTypeNum();
-                if (syn == 0 && kk == 0) System.out.println("success");
-            } else {
-                if (kk != 1) {
-                    System.out.print("分析第"+lineNum+"行 ");
-                    System.out.println("缺end");
-                    kk = 1;
-                }
-            }
+        System.out.print("分析第"+lineNum+"句 ");
+        if (syn != 1) {
+            errorNum++;
+            System.out.print("缺begin");
         } else {
-            System.out.print("分析第"+lineNum+"行 ");
-            System.out.println("缺begin");
-            jump();
-            kk = 1;
+            syn = codeScanner.scan().getTypeNum();
+        }
+
+        System.out.println();
+        lineNum ++;
+
+        yucu();
+
+        if (syn == 6) {
+            syn = codeScanner.scan().getTypeNum();
+            print(syn == 0 && errorNum == 0);
+        } else {
+            errorNum++;
+            System.out.println("缺end");
+            print(false);
         }
     }
 
     void yucu() {
-        statement();
+        if (statement()) return;
         while (syn == 58) {
-            System.out.println("分析第"+lineNum+"行");
+            //System.out.println("分析第"+lineNum+"句");
             lineNum ++;
             syn = codeScanner.scan().getTypeNum();
-            statement();
+            if (statement()) break;
         }
     }
 
-    void statement() {
+    // 返回bool确定是否为end句
+    boolean statement() {
+        System.out.print("分析第"+lineNum+"句 ");
         if (syn == 20) {
             syn = codeScanner.scan().getTypeNum();
             if (syn == 48) {
                 syn = codeScanner.scan().getTypeNum();
                 expression();
             } else {
-                System.out.print("分析第"+lineNum+"行 ");
-                System.out.println("赋值号错误");
-                kk = 1;
-                jump();
+                errorNum++;
+                System.out.print("赋值号错误");
+                jumpTo58();
             }
+
+            System.out.println();
+            return false;
+        } else if (syn == 6 || syn == 0) {
+            return true;
         } else {
-            System.out.print("分析第"+lineNum+"行 ");
-            System.out.println("语句错误");
-            kk = 1;
-            jump();
+            errorNum++;
+            System.out.print("语句错误");
+            jumpTo58();
+
+            System.out.println();
+            return false;
         }
     }
 
@@ -92,27 +103,35 @@ public class LRParser {
             if (syn == 60) {
                 syn = codeScanner.scan().getTypeNum();
             } else {
-                System.out.print("分析第"+lineNum+"行 ");
-                System.out.println("‘)’错误");
-                kk = 1;
-                jump();
+                errorNum++;
+                System.out.print("‘)’错误");
+                jumpTo58();
             }
         } else {
-            System.out.print("分析第"+lineNum+"行 ");
-            System.out.println("表达式错误");
-            kk = 1;
-            jump();
+            errorNum++;
+            System.out.print("表达式错误");
+            jumpTo58();
         }
     }
 
-    boolean jump() {
-        syn = codeScanner.scan().getTypeNum();
+    void jumpTo58() {
+        if (syn == 58) return; // 空语句，直接返回
+        Word scan = codeScanner.scan();
+        syn = scan.getTypeNum();
         while(syn != 58) {
-            syn = codeScanner.scan().getTypeNum();
-            if (syn == 6) {
-                return false;
+            Word scan1 = codeScanner.scan();
+            syn = scan1.getTypeNum();
+            if (syn == 6 ||syn == 0) {
+                return;
             }
         }
-        return true;
+    }
+
+    void print(boolean isSuccess) {
+        String print = isSuccess?"success: " : "failed: ";
+        System.out.println(
+                "\n--------------------------------\n" +
+                        print + "error("+ errorNum+")\n" +
+                        "--------------------------------");
     }
 }

@@ -63,7 +63,7 @@ public class Space {
         public void run() {
             //EvolveWorkPool.execute(()->{ // 不断扫描子棋盘，生产cell进入cellQueue
                 try {
-                    cLogger.info("CellHandler-{} start.{}",serialNum,this.toString());
+                    //cLogger.info("CellHandler-{} start.{}",serialNum,this.toString());
                     for (int i = x_lEdge; i <= x_rEdge; i ++) {
                         for (int j = y_tEdge; j <= y_bEdge; j ++) {
                             //while (! queue.add(new Cell(i, j, cellSpace[i][j])));
@@ -139,7 +139,7 @@ public class Space {
         long sT = System.currentTimeMillis();
         this.temp = new int[spaceBase][spaceBase];
         for (int i = 1; i <= evolutionAlg; i ++) {
-            logger.info("evolutionAlg-{}",i);
+            //logger.info("evolutionAlg-{}",i);
             for (int j = 0; j < numDivBlocks; j ++) {
                 EvolveWorkPool.execute(new CellsHandler(j));
             }
