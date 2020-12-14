@@ -1,6 +1,7 @@
 package cs_works.works4;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,26 +12,29 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Getter
 public class Adapter extends Thread{
 
-    private AtomicInteger carRecordListIndex = new AtomicInteger(0);
+    private final AtomicInteger carRecordListIndex = new AtomicInteger(0);
     private volatile boolean isDone;
     private Thread cur;
     private final Map<Integer, MouthTaskThread> threadMap = new HashMap<>();
 
+    @SneakyThrows
     @Override
     public void run() {
         cur = Thread.currentThread();
+        System.out.println("adapter running...");
         while (true) {
             if (cur.isInterrupted()) {
                 isDone = true;
                 adapter();
+                System.out.println("adapter has done. total records: " + carRecordListIndex);
                 break;
             }
             adapter();
         }
-        System.out.println(carRecordListIndex.intValue());
     }
 
     public void stopThis() {
+        System.out.println("adapter isInterrupted.");
         cur.interrupt();
     }
 

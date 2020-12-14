@@ -17,7 +17,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class DigLog {
 
-    static final String stu_number = "201825010113";
+    static final String stu_number = "201816060202";
     static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     static final List<CarRecord> carRecordList = new ArrayList<>();
     static RandomAccessFile reader;
@@ -64,11 +64,25 @@ public class DigLog {
         try {
             long read_sT = System.currentTimeMillis();
             Adapter adapter = new Adapter();
+
             adapter.start();
             readLine();
             long read_eT = System.currentTimeMillis() - read_sT;
             System.out.println("End ReadFile:  " + getStandardTime(read_eT));
+
             adapter.stopThis();
+
+            Set<Map.Entry<Integer, MouthTaskThread>> entries = adapter.getThreadMap().entrySet();
+
+            for (Map.Entry<Integer, MouthTaskThread> entry : entries) {
+                entry.getValue().start();
+            }
+
+            for (Map.Entry<Integer, MouthTaskThread> entry : entries) {
+                entry.getValue().join();
+            }
+
+            MouthTaskThread.scanLists(MouthTaskThread.publicCarInList, MouthTaskThread.publicCarOutList);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -107,7 +121,7 @@ public class DigLog {
 //            carInOutTime.incrementAndGet();
 //        }
 
-        System.out.println("total time: "+(System.currentTimeMillis() - sT)/1000.0 + "s");
+        System.out.println("End Process: "+(System.currentTimeMillis() - sT)/1000.0 + "s");
         System.out.println("carInOutTime: " + carInOutTime + " time cars");
         System.out.println("carParkTime: " + carParkTime.longValue() + "s");
     }
