@@ -39,6 +39,7 @@ public class DigLog {
         int mouth;
         String carNumber;
 
+
         CarRecord(Date date,int mouth, String carNumber, boolean inOrOut) {
             this.carNumber = carNumber;
             this.date = date;
