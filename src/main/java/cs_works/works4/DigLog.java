@@ -29,7 +29,6 @@ public class DigLog {
 //    static Map<String/*carNumber*/,CarRecord> second_carInMap = new HashMap<>();
 //    static Map<String/*carNumber*/,CarRecord> second_carOutMap = new HashMap<>();
 
-
     static AtomicInteger carInOutTime = new AtomicInteger(0);
     static AtomicLong carParkTime = new AtomicLong(0);
 
@@ -62,27 +61,19 @@ public class DigLog {
         long sT = System.currentTimeMillis();
 
         try {
-            long read_sT = System.currentTimeMillis();
             Adapter adapter = new Adapter();
 
             adapter.start();
+
             readLine();
-            long read_eT = System.currentTimeMillis() - read_sT;
+
+            long read_eT = System.currentTimeMillis() - sT;
             System.out.println("End ReadFile:  " + getStandardTime(read_eT));
 
             adapter.stopThis();
 
-            Set<Map.Entry<Integer, MouthTaskThread>> entries = adapter.getThreadMap().entrySet();
+            doMouthThreads(adapter);
 
-            for (Map.Entry<Integer, MouthTaskThread> entry : entries) {
-                entry.getValue().start();
-            }
-
-            for (Map.Entry<Integer, MouthTaskThread> entry : entries) {
-                entry.getValue().join();
-            }
-
-            MouthTaskThread.scanLists(MouthTaskThread.publicCarInList, MouthTaskThread.publicCarOutList);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -147,18 +138,8 @@ public class DigLog {
 
                     if (b == 13) break;
                 }
-                String gbkLine = new String(bs, Charset.forName("GBK"));
-                gbkLine = gbkLine.trim();
-                // System.out.println(gbkLine);
 
-                String[] line_split = gbkLine.split(",");
-                if (line_split[1].equals(stu_number)) {
-                    int mouth = Integer.parseInt(line_split[0].substring(5,7));
-                    CarRecord record = new CarRecord(sdf.parse(line_split[0]),mouth, line_split[2], line_split[3].equals("in"));
-                    synchronized (carRecordList) {
-                        carRecordList.add(record);
-                    }
-                }
+                addToCarList(bs);
 
                 if (buffer.position() != buffer.limit()){
                     get = false;
@@ -185,5 +166,32 @@ public class DigLog {
         Date date = new Date(timestamp);
         sdf.format(date);
         return sdf.format(date);
+    }
+
+    public static void addToCarList(byte[] bs) throws ParseException {
+        String gbkLine = new String(bs, Charset.forName("GBK"));
+        gbkLine = gbkLine.trim();
+        String[] line_split = gbkLine.split(",");
+        if (line_split[1].equals(stu_number)) {
+            int mouth = Integer.parseInt(line_split[0].substring(5,7));
+            CarRecord record = new CarRecord(sdf.parse(line_split[0]),mouth, line_split[2], line_split[3].equals("in"));
+            synchronized (carRecordList) {
+                carRecordList.add(record);
+            }
+        }
+    }
+
+    public static void doMouthThreads(Adapter adapter) throws InterruptedException {
+        Set<Map.Entry<Integer, MouthTaskThread>> entries = adapter.getThreadMap().entrySet();
+
+        for (Map.Entry<Integer, MouthTaskThread> entry : entries) {
+            entry.getValue().start();
+        }
+
+        for (Map.Entry<Integer, MouthTaskThread> entry : entries) {
+            entry.getValue().join();
+        }
+
+        MouthTaskThread.scanLists(MouthTaskThread.publicCarInList, MouthTaskThread.publicCarOutList);
     }
 }
