@@ -45,6 +45,7 @@ public class MouthTaskThread implements Runnable{
                     match++;
                     long thisCarParkTime = carOutRecord.getDate().getTime() - next.getDate().getTime();
 
+
                     String date = carOutRecord.getYear() + "-" + carOutRecord.getMouth();
                     if (!costMap.containsKey(date)) {
                         costMap.put(date,cost(thisCarParkTime));

@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class DigLog {
 
-    static final String stu_number = "201816060202";
+    static final String stu_number = "201825010113";
     static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     static final List<CarRecord> carRecordList = new ArrayList<>();
     static RandomAccessFile reader;
@@ -38,6 +38,7 @@ public class DigLog {
 
         CarRecord(Date date,int year, int mouth, String carNumber, boolean inOrOut) {
             this.carNumber = carNumber;
+            this.year = year;
             this.date = date;
             this.in = inOrOut;
             this.mouth = mouth;
@@ -75,8 +76,13 @@ public class DigLog {
             e.printStackTrace();
         }
 
+        List<String> costList = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : MouthTaskThread.costMap.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+            costList.add(entry.getKey() + ": " + entry.getValue() + "元");
+        }
+        costList.sort(Comparator.naturalOrder());
+        for (String s : costList) {
+            System.out.println(s);
         }
         System.out.println("End Process: "+(System.currentTimeMillis() - sT)/1000.0 + "s");
         System.out.println("carInOutTime: " + carInOutTime + " time cars");
