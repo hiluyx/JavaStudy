@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author best lu
  * @since 2020/11/17
  */
-public class EvolveWorkPool {
+public class CS_WorkPool {
     private static final int QUEUE_SIZE = 10;//缓冲队列队长
     private static final int ALIVE_POOL_SIZE = 10;
     private static final int MAX_POOL_SIZE = 10;

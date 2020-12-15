@@ -1,6 +1,6 @@
 package cs_works.works2.space;
 
-import cs_works.taskPool.EvolveWorkPool;
+import cs_works.taskPool.CS_WorkPool;
 import cs_works.works2.taskQueue.CellQueue;
 import lombok.Data;
 import lombok.Setter;
@@ -141,7 +141,7 @@ public class Space {
         for (int i = 1; i <= evolutionAlg; i ++) {
             //logger.info("evolutionAlg-{}",i);
             for (int j = 0; j < numDivBlocks; j ++) {
-                EvolveWorkPool.execute(new CellsHandler(j));
+                CS_WorkPool.execute(new CellsHandler(j));
             }
             synchronized (lock) {
                 lock.wait();

@@ -21,12 +21,12 @@ public class Adapter extends Thread{
     @Override
     public void run() {
         cur = Thread.currentThread();
-        System.out.println("adapter running...");
+        //System.out.println("adapter running...");
         while (true) {
             if (cur.isInterrupted()) {
                 isDone = true;
                 adapter();
-                System.out.println("adapter has done. total records: " + carRecordListIndex);
+                //System.out.println("adapter has done. total records: " + carRecordListIndex);
                 break;
             }
             adapter();
@@ -34,7 +34,7 @@ public class Adapter extends Thread{
     }
 
     public void stopThis() {
-        System.out.println("adapter isInterrupted.");
+        //System.out.println("adapter isInterrupted.");
         cur.interrupt();
     }
 

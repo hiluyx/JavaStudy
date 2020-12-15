@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class MouthTaskThread extends Thread{
+public class MouthTaskThread implements Runnable{
 
     public static final List<DigLog.CarRecord> publicCarInList = new ArrayList<>();
     public static final List<DigLog.CarRecord> publicCarOutList = new ArrayList<>();
@@ -16,8 +16,8 @@ public class MouthTaskThread extends Thread{
 
     @Override
     public void run() {
-        System.out.println(Thread.currentThread().getName() + "start: the carInList: " + carInList.size()
-                + ", the carOutList: " + carOutList.size());
+//        System.out.println(Thread.currentThread().getName() + "start: the carInList: " + carInList.size()
+//                + ", the carOutList: " + carOutList.size());
         scanLists(carInList,carOutList);
         publicCarOutList.addAll(carOutList);
         publicCarInList.addAll(carInList);
@@ -49,9 +49,9 @@ public class MouthTaskThread extends Thread{
             }
             else index ++;
         }
-        System.out.println(Thread.currentThread().getName() + " in this mouth: "
-                + carInList.size() + " carsIn no match, "
-                + carOutList.size() + " carsOut no match,"
-                + match + " match success.");
+//        System.out.println(Thread.currentThread().getName() + " in this mouth: "
+//                + carInList.size() + " carsIn no match, "
+//                + carOutList.size() + " carsOut no match,"
+//                + match + " match success.");
     }
 }
