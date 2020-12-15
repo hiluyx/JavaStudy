@@ -32,10 +32,11 @@ public class DigLog {
     public static class CarRecord {
         boolean in;
         Date date;
+        int year;
         int mouth;
         String carNumber;
 
-        CarRecord(Date date,int mouth, String carNumber, boolean inOrOut) {
+        CarRecord(Date date,int year, int mouth, String carNumber, boolean inOrOut) {
             this.carNumber = carNumber;
             this.date = date;
             this.in = inOrOut;
@@ -74,6 +75,9 @@ public class DigLog {
             e.printStackTrace();
         }
 
+        for (Map.Entry<String, Integer> entry : MouthTaskThread.costMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
         System.out.println("End Process: "+(System.currentTimeMillis() - sT)/1000.0 + "s");
         System.out.println("carInOutTime: " + carInOutTime + " time cars");
         System.out.println("carParkTime: " + carParkTime.longValue() + "s");
@@ -135,8 +139,12 @@ public class DigLog {
         gbkLine = gbkLine.trim();
         String[] line_split = gbkLine.split(",");
         if (line_split[1].equals(stu_number)) {
+            int year = Integer.parseInt(line_split[0].substring(0,4));
             int mouth = Integer.parseInt(line_split[0].substring(5,7));
-            CarRecord record = new CarRecord(sdf.parse(line_split[0]),mouth, line_split[2], line_split[3].equals("in"));
+            CarRecord record = new CarRecord(sdf.parse(line_split[0]),
+                    year, mouth,
+                    line_split[2],
+                    line_split[3].equals("in"));
             synchronized (carRecordList) {
                 carRecordList.add(record);
             }
