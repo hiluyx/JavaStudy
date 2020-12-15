@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Getter
 public class Adapter extends Thread{
 
+    public static int MOUTH_NUM = 0;
     private final AtomicInteger carRecordListIndex = new AtomicInteger(0);
     private volatile boolean isDone;
     private Thread cur;
@@ -53,6 +54,7 @@ public class Adapter extends Thread{
                     MouthTaskThread attach = threadMap.get(carRecord.getMouth());
                     if (attach == null) {
                         attach = new MouthTaskThread();
+                        MOUTH_NUM ++;
                         threadMap.put(carRecord.getMouth(), attach);
                     }
 

@@ -17,17 +17,13 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class DigLog {
 
-    static final String stu_number = "201825010113";
+    static final String stu_number = "201816060202";
     static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     static final List<CarRecord> carRecordList = new ArrayList<>();
     static RandomAccessFile reader;
     static FileChannel channel;
     static ByteBuffer buffer = ByteBuffer.allocate(1024);
     static boolean isDone = false;
-//    static Map<String/*carNumber*/,CarRecord> carInMap = new HashMap<>();
-//    static Map<String/*carNumber*/,CarRecord> carOutMap = new HashMap<>();
-//    static Map<String/*carNumber*/,CarRecord> second_carInMap = new HashMap<>();
-//    static Map<String/*carNumber*/,CarRecord> second_carOutMap = new HashMap<>();
 
     static AtomicInteger carInOutTime = new AtomicInteger(0);
     static AtomicLong carParkTime = new AtomicLong(0);
@@ -77,40 +73,6 @@ public class DigLog {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-
-//        for (CarRecord carRecord : carRecordList){
-//            if (carRecord.isIn()) {
-//                if (carInMap.put(carRecord.getCarNumber(),carRecord) != null) {
-//                    second_carInMap.put(carRecord.getCarNumber(), carRecord);
-//                }
-//            } else {
-//                if (carOutMap.put(carRecord.getCarNumber(),carRecord) != null){
-//                    //System.out.println(carRecord.toString());
-//                    second_carOutMap.put(carRecord.getCarNumber(), carRecord);
-//                }
-//            }
-//        }
-//
-//        /*
-//         * 开始统计匹配已经分为in和out的两个Map汽车数据
-//         */
-//        CarRecord carIn;
-//        for (Map.Entry<String,CarRecord> entry : carOutMap.entrySet()) {
-//            carIn = carInMap.get(entry.getKey());
-//            long park_thisTime = entry.getValue().getDate().getTime() - carIn.getDate().getTime();
-//            carParkTime.addAndGet(park_thisTime);
-//            carInOutTime.incrementAndGet();
-//        }
-//
-//        /*
-//         * 开始统计匹配有两次进出库的汽车数据，因为Map的Key不能重复，所以要再统计一遍
-//         */
-//        for (Map.Entry<String,CarRecord> entry : second_carOutMap.entrySet()) {
-//            carIn = second_carInMap.get(entry.getKey());
-//            long park_thisTime = entry.getValue().getDate().getTime() - carIn.getDate().getTime();
-//            carParkTime.addAndGet(park_thisTime);
-//            carInOutTime.incrementAndGet();
-//        }
 
         System.out.println("End Process: "+(System.currentTimeMillis() - sT)/1000.0 + "s");
         System.out.println("carInOutTime: " + carInOutTime + " time cars");
@@ -188,7 +150,9 @@ public class DigLog {
             CS_WorkPool.execute(entry.getValue());
         }
 
-
+        synchronized (DigLog.class) {
+            DigLog.class.wait();
+        }
 
         MouthTaskThread.scanLists(MouthTaskThread.publicCarInList, MouthTaskThread.publicCarOutList);
     }

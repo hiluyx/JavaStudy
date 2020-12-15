@@ -4,10 +4,12 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
 public class MouthTaskThread implements Runnable{
 
+    public static AtomicInteger lockCounter = new AtomicInteger(0);
     public static final List<DigLog.CarRecord> publicCarInList = new ArrayList<>();
     public static final List<DigLog.CarRecord> publicCarOutList = new ArrayList<>();
 
@@ -16,11 +18,14 @@ public class MouthTaskThread implements Runnable{
 
     @Override
     public void run() {
-//        System.out.println(Thread.currentThread().getName() + "start: the carInList: " + carInList.size()
-//                + ", the carOutList: " + carOutList.size());
         scanLists(carInList,carOutList);
         publicCarOutList.addAll(carOutList);
         publicCarInList.addAll(carInList);
+        synchronized (DigLog.class) {
+            if (lockCounter.incrementAndGet() == Adapter.MOUTH_NUM) {
+                DigLog.class.notifyAll();
+            }
+        }
     }
 
     public static void scanLists(List<DigLog.CarRecord> carInList, List<DigLog.CarRecord> carOutList) {
@@ -49,9 +54,5 @@ public class MouthTaskThread implements Runnable{
             }
             else index ++;
         }
-//        System.out.println(Thread.currentThread().getName() + " in this mouth: "
-//                + carInList.size() + " carsIn no match, "
-//                + carOutList.size() + " carsOut no match,"
-//                + match + " match success.");
     }
 }
