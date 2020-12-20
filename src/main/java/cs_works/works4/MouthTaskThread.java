@@ -45,7 +45,6 @@ public class MouthTaskThread implements Runnable{
                     match++;
                     long thisCarParkTime = carOutRecord.getDate().getTime() - next.getDate().getTime();
 
-
                     String date = carOutRecord.getYear() + "-" + carOutRecord.getMouth();
                     if (!costMap.containsKey(date)) {
                         costMap.put(date,cost(thisCarParkTime));
@@ -74,8 +73,8 @@ public class MouthTaskThread implements Runnable{
         if (parkTime < 30*60*1000) return 0;
         else if (parkTime <= 2*oneH) return 10;
         else {
-            return (int)(20 + /* 基础的两小时 */
-                    (parkTime - 2*oneH) / oneH + /* 时数 - 2 */
+            return (int)(10 + /* 基础的两小时 */
+                    2 * (parkTime - 2*oneH) / oneH + /* 时数 - 2 */
                     (((parkTime - 2*oneH) % oneH) > 0 ? 2 : 0)); /* 秒数剩余 */
         }
     }
