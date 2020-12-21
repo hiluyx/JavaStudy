@@ -54,10 +54,19 @@ public enum Symbol {
         this.syn = syn;
     }
 
+
     public static Symbol getSymbol(String sign) {
         if (sign == null || sign.equals("")) return null;
         for (Symbol symbol : Symbol.values()) {
             if (symbol.getSign().equals(sign)) {
+                return symbol;
+            }
+        }
+        return null;
+    }
+    public static Symbol getSymbol(int syn) {
+        for (Symbol symbol : Symbol.values()) {
+            if (symbol.getSyn() == syn) {
                 return symbol;
             }
         }
