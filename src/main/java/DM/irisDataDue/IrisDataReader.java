@@ -114,10 +114,4 @@ public class IrisDataReader {
         }
         return list;
     }
-
-
-
-    static void writeLine(List<Iris> irises) {
-
-    }
 }

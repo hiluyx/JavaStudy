@@ -9,8 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class CS_WorkPool {
     private static final int QUEUE_SIZE = 8;//缓冲队列队长
-    private static final int ALIVE_POOL_SIZE = 4;
-    private static final int MAX_POOL_SIZE = 4;
+    private static final int ALIVE_POOL_SIZE = 10;
+    private static final int MAX_POOL_SIZE = 10;
     private static final int KEEP_ALIVE_TIME = 2;
     private static final ExecutorService THREAD_POOL = new ThreadPoolExecutor(
             ALIVE_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME,
